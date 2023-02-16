@@ -1,3 +1,4 @@
+#FROM centos:7
 FROM amazonlinux:latest
 LABEL maintainer="roquleon"
 RUN amazon-linux-extras install nginx1
