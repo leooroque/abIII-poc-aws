@@ -7,15 +7,17 @@ RUN yum install -y nginx
 RUN yum install -y vim
 RUN yum install -y cronie
 RUN yum install -y amazon-efs-utils
-RUN yum -y install wget
-RUN wget https://bootstrap.pypa.io/pip/3.4/get-pip.py -O /tmp/get-pip.py
-RUN wget https://bootstrap.pypa.io/get-pip.py -O /tmp/get-pip.py
-RUN pip3 install botocore 
+RUN yum install -y unzip
+RUN yum install -y less
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+RUN unzip awscliv2.zip
+RUN sh ./aws/install 
 CMD /
-RUN mkdir -p efs/crt
+RUN mkdir -p efs/crt/stage
 RUN mkdir crt
 RUN mkdir script
 COPY ./crt/ca.pem /efs/crt/
+COPY ./crt/ca.pem /efs/crt/stage/
 COPY ./watchCA.sh /script/
 COPY ./default.conf /etc/nginx/conf.d/
 COPY ./crt/* /crt/
